@@ -6,6 +6,36 @@
         <title>Jogo da Velha</title>
     </head>
     <body>
+        <main class="game">
+            <div class="game__header">
+                <button class="game__next-round-btn">
+                    <i data-lucide="arrow-big-right"></i>
+                    <span>Próxima</span>
+                </button>
+                <div class="game__title">
+                    <h1>Jogo da Velha</h1>
+                </div>
+                <button class="game__reset-btn">
+                    <i data-lucide="refresh-ccw"></i>
+                    <span>Resetar</span>
+                </button>
+            </div>
+            <div class="game__board"></div>
+            <div class="game__scoreboard">
+                <div class="score score--user">
+                    <p class="score__name">Jogador</p>
+                    <p class="score__value">0</p>
+                </div>
+                <div class="score score--tie">
+                    <p class="score__name">Empates</p>
+                    <p class="score__value">0</p>
+                </div>
+                <div class="score score--ai">
+                    <p class="score__name">AI</p>
+                    <p class="score__value">0</p>
+                </div>
+            </div>
+        </main>
         <script type="module" src="./src/index.js"></script>
     </body>
 </html>
