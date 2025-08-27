@@ -1,7 +1,8 @@
-import { createIcons, RefreshCcw, ArrowBigRight } from 'lucide'
+import { createIcons, RefreshCcw, ArrowBigRight, Gauge } from 'lucide'
 
 createIcons({
     icons: {
+        Gauge,
         RefreshCcw,
         ArrowBigRight
     }
