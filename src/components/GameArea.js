@@ -6,6 +6,8 @@ import { AI } from '../libs/core/models/ai/AI.js'
 import { CellArea } from './CellArea.js'
 
 export function GameArea() {
+    let cpu = new AI()
+
     const user = new Player({
         type: Cell.Cross,
         name: 'Player'
@@ -48,7 +50,7 @@ export function GameArea() {
                 game = game.mark(cell.row, cell.col)
 
                 if (game.currentPlayer.isAI) {
-                    game = AI.mark(game)
+                    game = cpu.mark(game)
                 }
 
                 if (game.result.isFinished) {
@@ -66,7 +68,7 @@ export function GameArea() {
         game = game.reset()
 
         if (game.firstPlayer === game.ai) {
-            game = AI.mark(game)
+            game = cpu.mark(game)
         }
 
         render()
@@ -76,11 +78,16 @@ export function GameArea() {
         game = game.nextRound()
 
         if (game.firstPlayer === game.ai) {
-            game = AI.mark(game)
+            game = cpu.mark(game)
         }
 
         render()
     }
 
-    return { render, nextRound, resetGame }
+    const updateDifficulty = (difficulty) => {
+        cpu = new AI(difficulty)
+        nextRound()
+    }
+
+    return { render, nextRound, resetGame, updateDifficulty }
 }
