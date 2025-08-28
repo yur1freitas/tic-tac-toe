@@ -15,12 +15,40 @@ export class Grid {
         return this._data.length
     }
 
+    data() {
+        return this._copy()
+    }
+
+    _copy() {
+        return this._data.map((row) => [...row])
+    }
+
     values() {
         return this._data.flat()
     }
 
-    data() {
-        return this._copy()
+    /**
+     * @returns {T[][]}
+     */
+    rows() {
+        return this._data.map((row) => [...row])
+    }
+
+    /**
+     * @returns {T[][]}
+     */
+    cols() {
+        return this._data.map((row, i) => row.map((_, j) => this._data[j][i]))
+    }
+
+    /**
+     * @returns {T[][]}
+     */
+    diagonals() {
+        const primary = this._data.map((_, i) => this._data[i][i])
+        const secondary = this._data.map((_, i) => this._data[i][this.size - 1 - i])
+
+        return [primary, secondary]
     }
 
     /**
@@ -53,34 +81,6 @@ export class Grid {
         grid[row][col] = value
 
         return new Grid(grid)
-    }
-
-    /**
-     * @returns {T[][]}
-     */
-    rows() {
-        return this._data.map((row) => [...row])
-    }
-
-    /**
-     * @returns {T[][]}
-     */
-    cols() {
-        return this._data.map((row, i) => row.map((_, j) => this._data[j][i]))
-    }
-
-    /**
-     * @returns {T[][]}
-     */
-    diagonals() {
-        const primary = this._data.map((_, i) => this._data[i][i])
-        const secondary = this._data.map((_, i) => this._data[i][this.size - 1 - i])
-
-        return [primary, secondary]
-    }
-
-    _copy() {
-        return this._data.map((row) => [...row])
     }
 
     /**
