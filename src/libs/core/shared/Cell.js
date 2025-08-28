@@ -1,12 +1,15 @@
+import { Model } from './Model.js'
+
 /**
  * @typedef CellProps
- *
  * @prop {2 | 1 | 0} type
  * @prop {number} row
  * @prop {number} col
+ *
+ * @extends {Model<CellProps>}
+ * @class Cell
  */
-
-export class Cell {
+export class Cell extends Model {
     _type
     _row
     _col
@@ -17,6 +20,8 @@ export class Cell {
 
     /** @param {CellProps} */
     constructor({ row, col, type = Cell.Empty }) {
+        super()
+
         this._type = type
         this._row = row
         this._col = col
@@ -56,9 +61,6 @@ export class Cell {
             return this
         }
 
-        return new Cell({
-            ...this.props,
-            type
-        })
+        return this.clone({ type })
     }
 }
