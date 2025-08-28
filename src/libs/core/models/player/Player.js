@@ -1,3 +1,5 @@
+import { Model } from '../../shared/Model.js'
+
 /**
  * @typedef PlayerProps
  *
@@ -5,9 +7,11 @@
  * @prop {string} name
  * @prop {number} score
  * @prop {boolean} isAI
+ *
+ * @extends {Model<PlayerProps>}
+ * @class Player
  */
-
-export class Player {
+export class Player extends Model {
     _type
     _name
     _score
@@ -15,6 +19,8 @@ export class Player {
 
     /** @param {PlayerProps} */
     constructor({ type, name, score = 0, isAI = false }) {
+        super()
+
         this._type = type
         this._name = name
         this._score = score
@@ -57,17 +63,11 @@ export class Player {
             return this
         }
 
-        return new Player({
-            ...this.props,
-            score: this._score + score
-        })
+        return this.clone({ score: this._score + score })
     }
 
-    /** @returns {Player}*/
+    /** @returns {Player} */
     reset() {
-        return new Player({
-            ...this.props,
-            score: 0
-        })
+        return this.clone({ score: 0 })
     }
 }
