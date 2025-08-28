@@ -6,7 +6,7 @@ import { Cell } from '../libs/core/shared/Cell.js'
  * @param {2 | 1 | 0} type
  * @returns {HTMLDivElement}
  */
-export function Markup(type) {
+export function createMarkupElement(type) {
     const element = document.createElement('div')
     element.classList.add('markup')
 

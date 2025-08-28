@@ -1,6 +1,6 @@
 import { Cell } from '../libs/core/shared/Cell.js'
 
-import { Markup } from './Markup.js'
+import { createMarkupElement } from './createMarkupElement.js'
 
 /**
  * @param {Cell} cell
@@ -14,7 +14,7 @@ export function createCellElement(cell) {
         div.classList.add(cell.type === Cell.Circle ? 'cell--ai' : 'cell--user')
     }
 
-    const markup = Markup(cell.type)
+    const markup = createMarkupElement(cell.type)
     div.appendChild(markup)
 
     return div
