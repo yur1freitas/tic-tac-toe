@@ -7,15 +7,15 @@ import { Markup } from './Markup.js'
  * @returns {HTMLDivElement}
  */
 export function createCellElement(cell) {
-    const element = document.createElement('div')
-    element.classList.add('cell')
+    const div = document.createElement('div')
+    div.classList.add('cell')
 
     if (cell.isMarked) {
-        element.classList.add(cell.type === Cell.Circle ? 'cell--ai' : 'cell--user')
+        div.classList.add(cell.type === Cell.Circle ? 'cell--ai' : 'cell--user')
     }
 
     const markup = Markup(cell.type)
-    element.appendChild(markup)
+    div.appendChild(markup)
 
-    return element
+    return div
 }
