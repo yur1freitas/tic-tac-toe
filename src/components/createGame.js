@@ -5,7 +5,7 @@ import { AI } from '../libs/core/models/ai/AI.js'
 
 import { createCellElement } from './createCellElement.js'
 
-export function GameArea() {
+export function createGame() {
     let cpu = new AI()
 
     const user = new Player({
