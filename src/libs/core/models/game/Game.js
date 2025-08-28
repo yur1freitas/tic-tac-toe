@@ -6,10 +6,10 @@ import { RowsChecker } from '../result/RowsChecker.js'
 import { ColsChecker } from '../result/ColsChecker.js'
 import { DiagonalsChecker } from '../result/DiagonalsChecker.js'
 import { TieChecker } from '../result/TieChecker.js'
+import { Model } from '../../shared/Model.js'
 
 /**
  * @typedef GameProps
- *
  * @prop {Player} user
  * @prop {Player} ai
  * @prop {Player} firstPlayer
@@ -18,9 +18,10 @@ import { TieChecker } from '../result/TieChecker.js'
  * @prop {Board} board
  * @prop {Result} result
  *
+ * @extends {Model<GameProps>}
+ * @class Game
  */
-
-export class Game {
+export class Game extends Model {
     _user
     _ai
 
@@ -33,6 +34,8 @@ export class Game {
 
     /** @param {GameProps} */
     constructor({ user, ai, firstPlayer, currentPlayer, tie = 0, board = Board.create(), result = new Result() }) {
+        super()
+
         this._user = user
         this._ai = ai
         this._firstPlayer = firstPlayer
@@ -104,8 +107,7 @@ export class Game {
 
         const { user, ai, tie } = this._updateScore(result)
 
-        const game = new Game({
-            ...this.props,
+        const game = this.clone({
             result,
             board,
             user,
@@ -123,8 +125,7 @@ export class Game {
         const board = Board.create()
         const result = new Result()
 
-        return new Game({
-            ...this.props,
+        return this.clone({
             currentPlayer: firstPlayer,
             firstPlayer,
             result,
@@ -146,7 +147,7 @@ export class Game {
         const board = Board.create()
         const result = new Result()
 
-        return new Game({
+        return this.clone({
             currentPlayer: firstPlayer,
             firstPlayer,
             result,
@@ -165,10 +166,7 @@ export class Game {
 
         const currentPlayer = this._currentPlayer.type === this._user.type ? this._ai : this._user
 
-        return new Game({
-            ...this.props,
-            currentPlayer
-        })
+        return this.clone({ currentPlayer })
     }
 
     /**
