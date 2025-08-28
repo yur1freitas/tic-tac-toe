@@ -3,9 +3,9 @@ import './styles/index.css'
 
 import './lucide.js'
 
-import { GameArea } from './components/GameArea.js'
+import { createGame } from './components/createGame.js'
 
-const { render, nextRound, resetGame, updateDifficulty } = GameArea()
+const { render, nextRound, resetGame, updateDifficulty } = createGame()
 
 const resetBtn = document.querySelector('.game__reset-btn')
 resetBtn.addEventListener('click', resetGame)
