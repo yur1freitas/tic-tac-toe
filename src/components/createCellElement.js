@@ -6,7 +6,7 @@ import { Markup } from './Markup.js'
  * @param {Cell} cell
  * @returns {HTMLDivElement}
  */
-export function CellArea(cell) {
+export function createCellElement(cell) {
     const element = document.createElement('div')
     element.classList.add('cell')
 

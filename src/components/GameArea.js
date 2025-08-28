@@ -3,7 +3,7 @@ import { Game } from '../libs/core/models/game/Game.js'
 import { Cell } from '../libs/core/shared/Cell.js'
 import { AI } from '../libs/core/models/ai/AI.js'
 
-import { CellArea } from './CellArea.js'
+import { createCellElement } from './createCellElement.js'
 
 export function GameArea() {
     let cpu = new AI()
@@ -44,7 +44,7 @@ export function GameArea() {
         const { cells } = game.board
 
         for (const cell of cells) {
-            const cellArea = CellArea(cell)
+            const cellArea = createCellElement(cell)
 
             cellArea.addEventListener('click', () => {
                 game = game.mark(cell.row, cell.col)
