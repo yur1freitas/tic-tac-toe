@@ -2,24 +2,26 @@ import { Grid } from '../../shared/Grid.js'
 import { Cell } from '../../shared/Cell.js'
 
 export class Board {
-    /** @type {Grid<Cell>} */
-    _grid
+    /**
+     * @type {Grid<Cell>}
+     */
+    #grid
 
     /** @param {Grid<Cell>} */
     constructor(grid) {
-        this._grid = grid
+        this.#grid = grid
     }
 
     get grid() {
-        return this._grid
+        return this.#grid
     }
 
     get size() {
-        return this._grid.size
+        return this.#grid.size
     }
 
     get cells() {
-        return this._grid.values()
+        return this.#grid.values()
     }
 
     get isFull() {
@@ -37,7 +39,7 @@ export class Board {
      * @returns {Cell | null}
      */
     getCell(row, col) {
-        return this._grid.get(row, col)
+        return this.#grid.get(row, col)
     }
 
     /**
@@ -46,13 +48,13 @@ export class Board {
      * @returns {Board}
      */
     markCell({ type, row, col }) {
-        const cell = this._grid.get(row, col)
+        const cell = this.#grid.get(row, col)
 
         if (cell === null || cell.isMarked) {
             return this
         }
 
-        const grid = this._grid.set(row, col, cell.mark(type))
+        const grid = this.#grid.set(row, col, cell.mark(type))
 
         return new Board(grid)
     }
@@ -64,7 +66,7 @@ export class Board {
      * @returns {boolean}
      */
     isMarkedCell(row, col) {
-        return Boolean(this._grid.get(row, col)?.isMarked)
+        return Boolean(this.#grid.get(row, col)?.isMarked)
     }
 
     /**
@@ -74,7 +76,7 @@ export class Board {
      * @returns {boolean}
      */
     isEmptyCell(row, col) {
-        return Boolean(this._grid.get(row, col)?.isEmpty)
+        return Boolean(this.#grid.get(row, col)?.isEmpty)
     }
 
     static create(size = 3) {

@@ -12,49 +12,48 @@ import { Model } from '../../shared/Model.js'
  * @class Player
  */
 export class Player extends Model {
-    _type
-    _name
-    _score
-    _isAI
+    #type
+    #name
+    #score
+    #isAI
 
     /** @param {PlayerProps} */
     constructor({ type, name, score = 0, isAI = false }) {
         super()
 
-        this._type = type
-        this._name = name
-        this._score = score
-        this._isAI = isAI
+        this.#type = type
+        this.#name = name
+        this.#score = score
+        this.#isAI = isAI
     }
 
     get type() {
-        return this._type
+        return this.#type
     }
 
     get name() {
-        return this._name
+        return this.#name
     }
 
     get score() {
-        return this._score
+        return this.#score
     }
 
     get isAI() {
-        return this._isAI
+        return this.#isAI
     }
 
     /** @returns {PlayerProps} */
     get props() {
         return {
-            type: this._type,
-            name: this._name,
-            isAI: this._isAI,
-            score: this._score
+            type: this.#type,
+            name: this.#name,
+            isAI: this.#isAI,
+            score: this.#score
         }
     }
 
     /**
-     *
      * @param {number} score
      * @returns {Player}
      */
@@ -63,7 +62,7 @@ export class Player extends Model {
             return this
         }
 
-        return this.clone({ score: this._score + score })
+        return this.clone({ score: this.#score + score })
     }
 
     /** @returns {Player} */

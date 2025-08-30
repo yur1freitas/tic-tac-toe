@@ -4,15 +4,15 @@
  */
 export class Grid {
     /** @type {T[][]} */
-    _data
+    #data
 
     /** @param {T[][]} data */
     constructor(data) {
-        this._data = data
+        this.#data = data
     }
 
     get size() {
-        return this._data.length
+        return this.#data.length
     }
 
     data() {
@@ -20,33 +20,33 @@ export class Grid {
     }
 
     _copy() {
-        return this._data.map((row) => [...row])
+        return this.#data.map((row) => [...row])
     }
 
     values() {
-        return this._data.flat()
+        return this.#data.flat()
     }
 
     /**
      * @returns {T[][]}
      */
     rows() {
-        return this._data.map((row) => [...row])
+        return this.#data.map((row) => [...row])
     }
 
     /**
      * @returns {T[][]}
      */
     cols() {
-        return this._data.map((row, i) => row.map((_, j) => this._data[j][i]))
+        return this.#data.map((row, i) => row.map((_, j) => this.#data[j][i]))
     }
 
     /**
      * @returns {T[][]}
      */
     diagonals() {
-        const primary = this._data.map((_, i) => this._data[i][i])
-        const secondary = this._data.map((_, i) => this._data[i][this.size - 1 - i])
+        const primary = this.#data.map((_, i) => this.#data[i][i])
+        const secondary = this.#data.map((_, i) => this.#data[i][this.size - 1 - i])
 
         return [primary, secondary]
     }
@@ -62,7 +62,7 @@ export class Grid {
             return null
         }
 
-        return this._data[row][col]
+        return this.#data[row][col]
     }
 
     /**

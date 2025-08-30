@@ -22,15 +22,15 @@ import { Model } from '../../shared/Model.js'
  * @class Game
  */
 export class Game extends Model {
-    _player1
-    _player2
+    #player1
+    #player2
 
-    _firstPlayer
-    _currentPlayer
+    #firstPlayer
+    #currentPlayer
 
-    _tie
-    _board
-    _result
+    #tie
+    #board
+    #result
 
     /** @param {GameProps} */
     constructor({
@@ -44,53 +44,53 @@ export class Game extends Model {
     }) {
         super()
 
-        this._tie = tie
-        this._board = board
-        this._result = result
-        this._player1 = player1
-        this._player2 = player2
-        this._firstPlayer = firstPlayer
-        this._currentPlayer = currentPlayer
+        this.#tie = tie
+        this.#board = board
+        this.#result = result
+        this.#player1 = player1
+        this.#player2 = player2
+        this.#firstPlayer = firstPlayer
+        this.#currentPlayer = currentPlayer
     }
 
     get player1() {
-        return this._player1
+        return this.#player1
     }
 
     get player2() {
-        return this._player2
+        return this.#player2
     }
 
     get firstPlayer() {
-        return this._firstPlayer
+        return this.#firstPlayer
     }
 
     get currentPlayer() {
-        return this._currentPlayer
+        return this.#currentPlayer
     }
 
     get tie() {
-        return this._tie
+        return this.#tie
     }
 
     get board() {
-        return this._board
+        return this.#board
     }
 
     get result() {
-        return this._result
+        return this.#result
     }
 
     /** @returns {Game} */
     get props() {
         return {
-            tie: this._tie,
-            board: this._board,
-            result: this._result,
-            player1: this._player1,
-            player2: this._player2,
-            firstPlayer: this._firstPlayer,
-            currentPlayer: this._currentPlayer
+            tie: this.#tie,
+            board: this.#board,
+            result: this.#result,
+            player1: this.#player1,
+            player2: this.#player2,
+            firstPlayer: this.#firstPlayer,
+            currentPlayer: this.#currentPlayer
         }
     }
 
@@ -111,9 +111,9 @@ export class Game extends Model {
             col
         })
 
-        const result = this._verifyResult(board)
+        const result = this.#verifyResult(board)
 
-        const { player1, player2, tie } = this._updateScore(result)
+        const { player1, player2, tie } = this.#updateScore(result)
 
         const game = this.clone({
             player1,
@@ -123,12 +123,12 @@ export class Game extends Model {
             tie
         })
 
-        return game._switchCurrentPlayers()
+        return game.#switchCurrentPlayers()
     }
 
     /** @returns {Game} */
     nextRound() {
-        const firstPlayer = this._firstPlayer.type === this._player1.type ? this._player2 : this._player1
+        const firstPlayer = this.#firstPlayer.type === this.#player1.type ? this.#player2 : this.#player1
 
         const board = Board.create()
         const result = new Result()
@@ -141,15 +141,12 @@ export class Game extends Model {
         })
     }
 
-    /**
-     *
-     * @returns {Game}
-     */
+    /** @returns {Game} */
     reset() {
-        const player1 = this._player1.reset()
-        const player2 = this._player2.reset()
+        const player1 = this.#player1.reset()
+        const player2 = this.#player2.reset()
 
-        const firstPlayer = this._firstPlayer.type === this._player1.type ? player2 : player1
+        const firstPlayer = this.#firstPlayer.type === this.#player1.type ? player2 : player1
 
         const tie = 0
         const board = Board.create()
@@ -167,22 +164,21 @@ export class Game extends Model {
     }
 
     /** @returns {Game} */
-    _switchCurrentPlayers() {
+    #switchCurrentPlayers() {
         if (!this.result.inProgress) {
             return this
         }
 
-        const currentPlayer = this._currentPlayer.type === this._player1.type ? this._player2 : this._player1
+        const currentPlayer = this.#currentPlayer.type === this.#player1.type ? this.#player2 : this.#player1
 
         return this.clone({ currentPlayer })
     }
 
     /**
-     *
      * @param {Result} result
      * @returns {{player1: Player, player2: Player, tie: number}}
      */
-    _updateScore(result) {
+    #updateScore(result) {
         const { player1, player2, tie } = this
 
         if (result.isWinner(this.player1)) {
@@ -201,11 +197,10 @@ export class Game extends Model {
     }
 
     /**
-     *
      * @param {Board} board
      * @returns {Result}
      */
-    _verifyResult(board) {
+    #verifyResult(board) {
         const colsResult = new ColsChecker().verifyBoard(board)
         const rowsResult = new RowsChecker().verifyBoard(board)
         const diagonalsResult = new DiagonalsChecker().verifyBoard(board)
@@ -216,7 +211,6 @@ export class Game extends Model {
     }
 
     /**
-     *
      * @param {Player} player1
      * @param {Player} player2
      * @returns {Game}

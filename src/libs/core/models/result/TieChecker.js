@@ -3,7 +3,6 @@ import { Board } from '../game/Board.js'
 
 export class TieChecker {
     /**
-     *
      * @param {Board} board
      * @returns {Result}
      */

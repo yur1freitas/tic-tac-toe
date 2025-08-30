@@ -29,7 +29,7 @@ export class AI {
      * @returns {Game}
      */
     mark(game) {
-        const [row, col] = AI._chooseMove(game, this._difficulty)
+        const [row, col] = AI.#chooseMove(game, this._difficulty)
         return game.mark(row, col)
     }
 
@@ -37,9 +37,9 @@ export class AI {
      * @param {Game} game
      * @returns {[number, number]}
      */
-    static _chooseMove(game, difficulty) {
+    static #chooseMove(game, difficulty) {
         if (game.board.isEmpty) {
-            return AI._getRandomMove(game)
+            return AI.#getRandomMove(game)
         }
 
         const level = Object.prototype.hasOwnProperty.call(DifficultyLevels, difficulty)
@@ -48,40 +48,38 @@ export class AI {
 
         const value = Math.random()
 
-        return value > level ? AI._findBestMove(game) : AI._getRandomMove(game)
+        return value > level ? AI.#findBestMove(game) : AI.#getRandomMove(game)
     }
 
     /**
-     *
      * @param {Game} game
      * @returns {[number, number]}
      */
-    static _getRandomMove(game) {
+    static #getRandomMove(game) {
         const row = randomInt(0, game.board.size - 1)
         const col = randomInt(0, game.board.size - 1)
 
         const cell = game.board.getCell(row, col)
 
         if (cell === null || cell.isMarked) {
-            return AI._getRandomMove(game)
+            return AI.#getRandomMove(game)
         }
 
         return [row, col]
     }
 
     /**
-     *
      * @param {Game} game
      * @returns {[number, number]}
      */
-    static _findBestMove(game) {
+    static #findBestMove(game) {
         let bestScore = -Infinity
         let bestPosition = [-1, -1]
 
         for (const cell of game.board.cells) {
             if (cell.isEmpty) {
                 const _temp = game.mark(cell.row, cell.col)
-                const score = AI._minimax(_temp)
+                const score = AI.#minimax(_temp)
 
                 if (score > bestScore) {
                     bestScore = score
@@ -94,14 +92,13 @@ export class AI {
     }
 
     /**
-     *
      * @param {Game} game
      * @param {number} beta
      * @param {number} alpha
      * @param {number} depth
      * @returns {number}
      */
-    static _minimax(game, beta = Infinity, alpha = -Infinity, depth = 0) {
+    static #minimax(game, beta = Infinity, alpha = -Infinity, depth = 0) {
         const [user, bot] = game.player1.isAI ? [game.player2, game.player1] : [game.player1, game.player2]
 
         if (game.result.isWinner(user)) return -10 + depth
@@ -113,7 +110,7 @@ export class AI {
                 if (cell.isEmpty) {
                     const _temp = game.mark(cell.row, cell.col)
 
-                    const score = AI._minimax(_temp, beta, alpha, depth + 1)
+                    const score = AI.#minimax(_temp, beta, alpha, depth + 1)
                     alpha = Math.max(alpha, score)
 
                     if (beta <= alpha) {
@@ -128,7 +125,7 @@ export class AI {
                 if (cell.isEmpty) {
                     const _temp = game.mark(cell.row, cell.col)
 
-                    const score = AI._minimax(_temp, beta, alpha, depth + 1)
+                    const score = AI.#minimax(_temp, beta, alpha, depth + 1)
                     beta = Math.min(beta, score)
 
                     if (beta <= alpha) {
