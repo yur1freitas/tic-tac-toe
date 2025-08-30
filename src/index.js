@@ -21,6 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 difficultySelect.addEventListener('change', (e) => {
     changeDifficulty(e.currentTarget.value)
+    nextRound()
 })
 
 render()
