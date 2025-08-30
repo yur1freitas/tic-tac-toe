@@ -6,8 +6,6 @@ import { AI } from '../libs/core/models/ai/AI.js'
 import { createCellElement } from './createCellElement.js'
 
 export function createGame() {
-    let ai = new AI()
-
     const player1 = new Player({
         type: Cell.Cross,
         name: 'Player'
@@ -19,22 +17,23 @@ export function createGame() {
         isAI: true
     })
 
+    let ai = new AI()
     let game = Game.create(player1, player2)
 
     const board = document.querySelector('.game__board')
 
+    const tieScore = document.querySelector('.score--tie > .score__value')
     const player1Score = document.querySelector('.score--player-1 > .score__value')
     const player2Score = document.querySelector('.score--player-2 > .score__value')
-    const tieScore = document.querySelector('.score--tie > .score__value')
 
     const resetBoard = () => {
         board.innerHTML = ''
     }
 
     const updateScorebar = () => {
+        tieScore.textContent = `${game.tie}`
         player1Score.textContent = `${game.player1.score}`
         player2Score.textContent = `${game.player2.score}`
-        tieScore.textContent = `${game.tie}`
     }
 
     const render = () => {
