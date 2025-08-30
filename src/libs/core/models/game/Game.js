@@ -10,8 +10,8 @@ import { Model } from '../../shared/Model.js'
 
 /**
  * @typedef GameProps
- * @prop {Player} user
- * @prop {Player} ai
+ * @prop {Player} player1
+ * @prop {Player} player2
  * @prop {Player} firstPlayer
  * @prop {Player} currentPlayer
  * @prop {number} tie
@@ -22,8 +22,8 @@ import { Model } from '../../shared/Model.js'
  * @class Game
  */
 export class Game extends Model {
-    _user
-    _ai
+    _player1
+    _player2
 
     _firstPlayer
     _currentPlayer
@@ -33,24 +33,32 @@ export class Game extends Model {
     _result
 
     /** @param {GameProps} */
-    constructor({ user, ai, firstPlayer, currentPlayer, tie = 0, board = Board.create(), result = new Result() }) {
+    constructor({
+        tie = 0,
+        board = Board.create(),
+        result = new Result(),
+        player1,
+        player2,
+        firstPlayer,
+        currentPlayer
+    }) {
         super()
 
-        this._user = user
-        this._ai = ai
-        this._firstPlayer = firstPlayer
-        this._currentPlayer = currentPlayer
         this._tie = tie
         this._board = board
         this._result = result
+        this._player1 = player1
+        this._player2 = player2
+        this._firstPlayer = firstPlayer
+        this._currentPlayer = currentPlayer
     }
 
-    get user() {
-        return this._user
+    get player1() {
+        return this._player1
     }
 
-    get ai() {
-        return this._ai
+    get player2() {
+        return this._player2
     }
 
     get firstPlayer() {
@@ -76,11 +84,11 @@ export class Game extends Model {
     /** @returns {Game} */
     get props() {
         return {
-            ai: this._ai,
             tie: this._tie,
-            user: this._user,
             board: this._board,
             result: this._result,
+            player1: this._player1,
+            player2: this._player2,
             firstPlayer: this._firstPlayer,
             currentPlayer: this._currentPlayer
         }
@@ -105,14 +113,14 @@ export class Game extends Model {
 
         const result = this._verifyResult(board)
 
-        const { user, ai, tie } = this._updateScore(result)
+        const { player1, player2, tie } = this._updateScore(result)
 
         const game = this.clone({
+            player1,
+            player2,
             result,
             board,
-            user,
-            tie,
-            ai
+            tie
         })
 
         return game._switchCurrentPlayers()
@@ -120,7 +128,7 @@ export class Game extends Model {
 
     /** @returns {Game} */
     nextRound() {
-        const firstPlayer = this._firstPlayer.type === this._user.type ? this._ai : this._user
+        const firstPlayer = this._firstPlayer.type === this._player1.type ? this._player2 : this._player1
 
         const board = Board.create()
         const result = new Result()
@@ -138,10 +146,10 @@ export class Game extends Model {
      * @returns {Game}
      */
     reset() {
-        const user = this._user.reset()
-        const ai = this._ai.reset()
+        const player1 = this._player1.reset()
+        const player2 = this._player2.reset()
 
-        const firstPlayer = this._firstPlayer.type === this._user.type ? ai : user
+        const firstPlayer = this._firstPlayer.type === this._player1.type ? player2 : player1
 
         const tie = 0
         const board = Board.create()
@@ -150,11 +158,11 @@ export class Game extends Model {
         return this.clone({
             currentPlayer: firstPlayer,
             firstPlayer,
+            player1,
+            player2,
             result,
             board,
-            user,
-            tie,
-            ai
+            tie
         })
     }
 
@@ -164,7 +172,7 @@ export class Game extends Model {
             return this
         }
 
-        const currentPlayer = this._currentPlayer.type === this._user.type ? this._ai : this._user
+        const currentPlayer = this._currentPlayer.type === this._player1.type ? this._player2 : this._player1
 
         return this.clone({ currentPlayer })
     }
@@ -172,24 +180,24 @@ export class Game extends Model {
     /**
      *
      * @param {Result} result
-     * @returns {{user: Player, ai: Player, tie: number}}
+     * @returns {{player1: Player, player2: Player, tie: number}}
      */
     _updateScore(result) {
-        const { user, ai, tie } = this
+        const { player1, player2, tie } = this
 
-        if (result.isWinner(this.user)) {
-            return { tie, ai, user: user.addScore(1) }
+        if (result.isWinner(this.player1)) {
+            return { tie, player2, player1: player1.addScore(1) }
         }
 
-        if (result.isWinner(this.ai)) {
-            return { tie, user, ai: ai.addScore(1) }
+        if (result.isWinner(this.player2)) {
+            return { tie, player1, player2: player2.addScore(1) }
         }
 
         if (result.isTie) {
-            return { user, ai, tie: tie + 1 }
+            return { player1, player2, tie: tie + 1 }
         }
 
-        return { user, ai, tie }
+        return { player1, player2, tie }
     }
 
     /**
@@ -209,16 +217,16 @@ export class Game extends Model {
 
     /**
      *
-     * @param {Player} user
-     * @param {Player} ai
+     * @param {Player} player1
+     * @param {Player} player2
      * @returns {Game}
      */
-    static create(user, ai) {
+    static create(player1, player2) {
         return new Game({
-            currentPlayer: user,
-            firstPlayer: user,
-            user,
-            ai
+            currentPlayer: player1,
+            firstPlayer: player1,
+            player1,
+            player2
         })
     }
 }

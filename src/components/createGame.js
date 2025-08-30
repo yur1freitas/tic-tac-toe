@@ -6,25 +6,25 @@ import { AI } from '../libs/core/models/ai/AI.js'
 import { createCellElement } from './createCellElement.js'
 
 export function createGame() {
-    let cpu = new AI()
+    let ai = new AI()
 
-    const user = new Player({
+    const player1 = new Player({
         type: Cell.Cross,
         name: 'Player'
     })
 
-    const ai = new Player({
+    const player2 = new Player({
         type: Cell.Circle,
         name: 'AI',
         isAI: true
     })
 
-    let game = Game.create(user, ai)
+    let game = Game.create(player1, player2)
 
     const board = document.querySelector('.game__board')
 
-    const playerScore = document.querySelector('.score--user > .score__value')
-    const aiScore = document.querySelector('.score--ai > .score__value')
+    const player1Score = document.querySelector('.score--player-1 > .score__value')
+    const player2Score = document.querySelector('.score--player-2 > .score__value')
     const tieScore = document.querySelector('.score--tie > .score__value')
 
     const resetBoard = () => {
@@ -32,8 +32,8 @@ export function createGame() {
     }
 
     const updateScorebar = () => {
-        playerScore.textContent = `${game.user.score}`
-        aiScore.textContent = `${game.ai.score}`
+        player1Score.textContent = `${game.player1.score}`
+        player2Score.textContent = `${game.player2.score}`
         tieScore.textContent = `${game.tie}`
     }
 
@@ -50,7 +50,7 @@ export function createGame() {
                 game = game.mark(cell.row, cell.col)
 
                 if (game.currentPlayer.isAI) {
-                    game = cpu.mark(game)
+                    game = ai.mark(game)
                 }
 
                 if (game.result.isFinished) {
@@ -67,8 +67,8 @@ export function createGame() {
     const resetGame = () => {
         game = game.reset()
 
-        if (game.firstPlayer === game.ai) {
-            game = cpu.mark(game)
+        if (game.currentPlayer.isAI) {
+            game = ai.mark(game)
         }
 
         render()
@@ -77,15 +77,15 @@ export function createGame() {
     const nextRound = () => {
         game = game.nextRound()
 
-        if (game.firstPlayer === game.ai) {
-            game = cpu.mark(game)
+        if (game.currentPlayer.isAI) {
+            game = ai.mark(game)
         }
 
         render()
     }
 
     const updateDifficulty = (difficulty) => {
-        cpu = new AI(difficulty)
+        ai = new AI(difficulty)
         nextRound()
     }
 
