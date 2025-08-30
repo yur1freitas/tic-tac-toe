@@ -55,7 +55,7 @@ export class AI {
         const probability = Object.prototype.hasOwnProperty.call(AILevel, mode) ? AILevel[mode] : 'normal'
         const value = Math.random()
 
-        return value > probability ? AI._bestPosition(game) : AI._randomPosition(game)
+        return value > probability ? AI._findBestMove(game) : AI._randomPosition(game)
     }
 
     /**
@@ -63,7 +63,7 @@ export class AI {
      * @param {Game} game
      * @returns {[number, number]}
      */
-    static _bestPosition(game) {
+    static _findBestMove(game) {
         let bestScore = -Infinity
         let bestPosition = [-1, -1]
 
