@@ -27,7 +27,7 @@ export class AI {
      */
     mark(game) {
         const [row, col] = game.board.isEmpty
-            ? AI._randomPosition(game)
+            ? AI._getRandomMove(game)
             : AI._positionByDifficulty(game, this._difficulty)
 
         return game.mark(row, col)
@@ -38,14 +38,14 @@ export class AI {
      * @param {Game} game
      * @returns {[number, number]}
      */
-    static _randomPosition(game) {
+    static _getRandomMove(game) {
         const row = randomInt(0, game.board.size - 1)
         const col = randomInt(0, game.board.size - 1)
 
         const cell = game.board.getCell(row, col)
 
         if (cell === null || cell.isMarked) {
-            return this._randomPosition(game)
+            return this._getRandomMove(game)
         }
 
         return [row, col]
@@ -55,7 +55,7 @@ export class AI {
         const probability = Object.prototype.hasOwnProperty.call(AILevel, mode) ? AILevel[mode] : 'normal'
         const value = Math.random()
 
-        return value > probability ? AI._findBestMove(game) : AI._randomPosition(game)
+        return value > probability ? AI._findBestMove(game) : AI._getRandomMove(game)
     }
 
     /**
