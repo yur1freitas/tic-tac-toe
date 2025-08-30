@@ -10,9 +10,9 @@ import { Model } from './Model.js'
  * @class Cell
  */
 export class Cell extends Model {
-    _type
-    _row
-    _col
+    #type
+    #row
+    #col
 
     static Cross = 2
     static Circle = 1
@@ -22,42 +22,42 @@ export class Cell extends Model {
     constructor({ row, col, type = Cell.Empty }) {
         super()
 
-        this._type = type
-        this._row = row
-        this._col = col
+        this.#type = type
+        this.#row = row
+        this.#col = col
     }
 
     get type() {
-        return this._type
+        return this.#type
     }
 
     get row() {
-        return this._row
+        return this.#row
     }
 
     get col() {
-        return this._col
+        return this.#col
     }
 
     /** @returns {CellProps} */
     get props() {
         return {
-            type: this._type,
-            row: this._row,
-            col: this._col
+            type: this.#type,
+            row: this.#row,
+            col: this.#col
         }
     }
 
     get isMarked() {
-        return this._type !== Cell.Empty
+        return this.#type !== Cell.Empty
     }
 
     get isEmpty() {
-        return this._type === Cell.Empty
+        return this.#type === Cell.Empty
     }
 
     mark(type) {
-        if (this._type !== Cell.Empty) {
+        if (this.#type !== Cell.Empty) {
             return this
         }
 
