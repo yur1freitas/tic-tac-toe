@@ -5,7 +5,6 @@ import { Game } from '../game/Game.js'
  * @typedef Difficulty
  * @type {'easy' | 'normal' | 'medium' | 'hard'}
  */
-
 export const DifficultyLevels = {
     easy: 0.75,
     normal: 0.5,
@@ -30,11 +29,26 @@ export class AI {
      * @returns {Game}
      */
     mark(game) {
-        const [row, col] = game.board.isEmpty
-            ? AI._getRandomMove(game)
-            : AI._positionByDifficulty(game, this._difficulty)
-
+        const [row, col] = AI._chooseMove(game, this._difficulty)
         return game.mark(row, col)
+    }
+
+    /**
+     * @param {Game} game
+     * @returns {[number, number]}
+     */
+    static _chooseMove(game, difficulty) {
+        if (game.board.isEmpty) {
+            return AI._getRandomMove(game)
+        }
+
+        const level = Object.prototype.hasOwnProperty.call(DifficultyLevels, difficulty)
+            ? DifficultyLevels[difficulty]
+            : DifficultyLevels.normal
+
+        const value = Math.random()
+
+        return value > level ? AI._findBestMove(game) : AI._getRandomMove(game)
     }
 
     /**
@@ -53,15 +67,6 @@ export class AI {
         }
 
         return [row, col]
-    }
-
-    static _positionByDifficulty(game, mode) {
-        const probability = Object.prototype.hasOwnProperty.call(DifficultyLevels, mode)
-            ? DifficultyLevels[mode]
-            : 'normal'
-        const value = Math.random()
-
-        return value > probability ? AI._findBestMove(game) : AI._getRandomMove(game)
     }
 
     /**
