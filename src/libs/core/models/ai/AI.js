@@ -63,7 +63,7 @@ export class AI {
         const cell = game.board.getCell(row, col)
 
         if (cell === null || cell.isMarked) {
-            return this._getRandomMove(game)
+            return AI._getRandomMove(game)
         }
 
         return [row, col]
