@@ -3,14 +3,14 @@ import { Game } from '../game/Game.js'
 
 /**
  * @typedef Difficulty
- * @type {'easy' | 'normal' | 'hard' | 'impossible''}
+ * @type {'easy' | 'normal' | 'medium' | 'hard'}
  */
 
-export const AILevel = {
+export const DifficultyLevels = {
     easy: 0.75,
     normal: 0.5,
-    hard: 0.25,
-    impossible: 0
+    medium: 0.25,
+    hard: 0
 }
 
 export class AI {
@@ -52,7 +52,9 @@ export class AI {
     }
 
     static _positionByDifficulty(game, mode) {
-        const probability = Object.prototype.hasOwnProperty.call(AILevel, mode) ? AILevel[mode] : 'normal'
+        const probability = Object.prototype.hasOwnProperty.call(DifficultyLevels, mode)
+            ? DifficultyLevels[mode]
+            : 'normal'
         const value = Math.random()
 
         return value > probability ? AI._findBestMove(game) : AI._getRandomMove(game)
