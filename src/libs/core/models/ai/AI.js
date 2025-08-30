@@ -104,13 +104,11 @@ export class AI {
     static _minimax(game, beta = Infinity, alpha = -Infinity, depth = 0) {
         const [user, bot] = game.player1.isAI ? [game.player1, game.player2] : [game.player2, game.player1]
 
-        const isAI = game.currentPlayer.isAI
-
         if (game.result.isWinner(user)) return -10 + depth
         if (game.result.isWinner(bot)) return +10 + depth
         if (game.result.isTie) return 0
 
-        if (isAI) {
+        if (game.currentPlayer.isAI) {
             for (const cell of game.board.cells) {
                 if (cell.isEmpty) {
                     const _temp = game.mark(cell.row, cell.col)
