@@ -8,12 +8,12 @@ import { createCellElement } from './createCellElement.js'
 export function createGame() {
     const player1 = new Player({
         type: Cell.Cross,
-        name: 'Player'
+        name: 'Jogador 1'
     })
 
     const player2 = new Player({
         type: Cell.Circle,
-        name: 'AI',
+        name: 'Jogador 2',
         isAI: true
     })
 
