@@ -83,10 +83,10 @@ export function createGame() {
         render()
     }
 
-    const updateDifficulty = (difficulty) => {
+    const changeDifficulty = (difficulty) => {
         ai = new AI(difficulty)
         nextRound()
     }
 
-    return { render, nextRound, resetGame, updateDifficulty }
+    return { render, nextRound, resetGame, changeDifficulty }
 }
