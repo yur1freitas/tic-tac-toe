@@ -21,6 +21,10 @@ export class AI {
         this._difficulty = difficulty
     }
 
+    get difficulty() {
+        return this._difficulty
+    }
+
     /**
      * @param {Game} game
      * @returns {Game}
