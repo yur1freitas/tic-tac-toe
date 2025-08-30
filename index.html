@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Jogo da Velha</title>
+      <script type="module" crossorigin src="/assets/index-DQA9wDiV.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/index-CLxFxeBR.css">
+    </head>
+    <body>
+        <main class="game">
+            <div class="game__header">
+                <div class="game__title">
+                    <h1>Jogo da Velha</h1>
+                </div>
+                <div class="game__controls">
+                    <button class="game__next-round-btn">
+                        <i class="icon" data-lucide="arrow-big-right"></i>
+                        <span>Próxima</span>
+                    </button>
+                    <button class="game__reset-btn">
+                        <i class="icon" data-lucide="refresh-ccw"></i>
+                        <span>Resetar</span>
+                    </button>
+                    <div class="game__difficulty">
+                        <i class="icon" data-lucide="gauge"></i>
+                        <select id="difficulty">
+                            <option value="easy">Fácil</option>
+                            <option value="normal" selected>Normal</option>
+                            <option value="medium">Médio</option>
+                            <option value="hard">Difícil</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="game__board"></div>
+            <div class="game__scoreboard">
+                <div class="score score--player-1">
+                    <p class="score__name">Jogador 1:</p>
+                    <p class="score__value">0</p>
+                </div>
+                <div class="score score--tie">
+                    <p class="score__name">Empates</p>
+                    <p class="score__value">0</p>
+                </div>
+                <div class="score score--player-2">
+                    <p class="score__name">Jogador 2:</p>
+                    <p class="score__value">0</p>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
