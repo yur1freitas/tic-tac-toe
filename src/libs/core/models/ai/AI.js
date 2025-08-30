@@ -102,7 +102,7 @@ export class AI {
      * @returns {number}
      */
     static _minimax(game, beta = Infinity, alpha = -Infinity, depth = 0) {
-        const [user, bot] = game.player1.isAI ? [game.player1, game.player2] : [game.player2, game.player1]
+        const [user, bot] = game.player1.isAI ? [game.player2, game.player1] : [game.player1, game.player2]
 
         if (game.result.isWinner(user)) return -10 + depth
         if (game.result.isWinner(bot)) return +10 + depth
