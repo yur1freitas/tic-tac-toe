@@ -10,8 +10,8 @@
     --width: 100vmin;
     --max-width: 95%;
 
-    --ai-color: #e11d48;
-    --user-color: #0ea5e9;
+    --player-1-color: #0ea5e9;
+    --player-2-color: #e11d48;
     --default-color: rgba(0, 0, 0, 0.25);
 }
 
@@ -31,7 +31,7 @@ body,
 
     font-size: 1rem;
     line-height: 1.5;
-    font-family: 'Chewy', sans-serif;
+    font-family: "Chewy", sans-serif;
 }
 
 .game {
@@ -190,12 +190,12 @@ body,
     font-size: 0.825rem;
 }
 
-.score--user {
-    --default-color: var(--user-color);
+.score--player-1 {
+    --default-color: var(--player-1-color);
 }
 
-.score--ai {
-    --default-color: var(--ai-color);
+.score--player-2 {
+    --default-color: var(--player-2-color);
 }
 
 @media screen and (min-width: 600px) {
@@ -222,12 +222,12 @@ body,
     cursor: pointer;
 }
 
-.cell--user {
-    --default-color: var(--user-color);
+.cell--player-1 {
+    --default-color: var(--player-1-color);
 }
 
-.cell--ai {
-    --default-color: var(--ai-color);
+.cell--player-2 {
+    --default-color: var(--player-2-color);
 }
 
 .cell:hover {

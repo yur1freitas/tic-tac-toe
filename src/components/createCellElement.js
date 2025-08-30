@@ -11,7 +11,7 @@ export function createCellElement(cell) {
     div.classList.add('cell')
 
     if (cell.isMarked) {
-        div.classList.add(cell.type === Cell.Circle ? 'cell--ai' : 'cell--user')
+        div.classList.add(cell.type === Cell.Cross ? 'cell--player-1' : 'cell--player-2')
     }
 
     const markup = createMarkupElement(cell.type)
