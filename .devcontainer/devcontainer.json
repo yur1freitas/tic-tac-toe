@@ -1,0 +1,20 @@
+{
+    "remoteUser": "dev",
+    "build": { "dockerfile": "Dockerfile", "context": "." },
+    "workspaceFolder": "/workspaces/tic-tac-toe",
+    "runArgs": [
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "--network",
+        "host"
+    ],
+    "features": {
+        "ghcr.io/devcontainers/features/node:1.7.1": {
+            "version": "24.15.0"
+        },
+        "ghcr.io/devcontainers/features/docker-in-docker:2.16.1": {
+            "moby": false
+        }
+    },
+    "postCreateCommand": ["/bin/sh", ".devcontainer/postCreateCommand.sh"]
+}
